@@ -1,7 +1,7 @@
 # Project: Third-Party APIs: Daily Planner
-  Deployable Link - > 
+  Deployable Link - > https://bilaalgithub.github.io/Daily-Planner-App/
 ## Table of Contents: 
-- [Project: Third-Party APIs: Daily Planner](#project-web-apis-code-quiz)
+- [Project: Third-Party APIs: Daily Planner](#project-third-party-apis-daily-planner)
   - [Table of Contents:](#table-of-contents)
   - [License:](#license)
   - [Description:](#description)
