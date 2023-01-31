@@ -43,31 +43,77 @@ $(".saveBtn").on("click", function(){
     localStorage.setItem(time, value);
 });
 
-$("#hr-9 .reservation").val(localStorage.getItem("hr-9"));
-$("#hr-10 .reservation").val(localStorage.getItem("hr-10"));
-$("#hr-11 .reservation").val(localStorage.getItem("hr-11"));
-$("#hr-12 .reservation").val(localStorage.getItem("hr-12"));
-$("#hr-13 .reservation").val(localStorage.getItem("hr-13"));
-$("#hr-14 .reservation").val(localStorage.getItem("hr-14"));
-$("#hr-15 .reservation").val(localStorage.getItem("hr-15"));
-$("#hr-16 .reservation").val(localStorage.getItem("hr-16"));
-$("#hr-17 .reservation").val(localStorage.getItem("hr-17"));
+$("#hour-9 .reservation").val(localStorage.getItem("hour-9"));
+$("#hour-10 .reservation").val(localStorage.getItem("hour-10"));
+$("#hour-11 .reservation").val(localStorage.getItem("hour-11"));
+$("#hour-12 .reservation").val(localStorage.getItem("hour-12"));
+$("#hour-13 .reservation").val(localStorage.getItem("hour-13"));
+$("#hour-14 .reservation").val(localStorage.getItem("hour-14"));
+$("#hour-15 .reservation").val(localStorage.getItem("hour-15"));
+$("#hour-16 .reservation").val(localStorage.getItem("hour-16"));
+$("#hour-17 .reservation").val(localStorage.getItem("hour-17"));
 
+// function to set background color to indicate time block is in past, present or future
+function setTimeBlockBackground(textBlock, hour, ampm)
+{
+    var currentHour = parseInt(moment().format("H")); // Gets current hour in 24 hour format
+    
+    var hour24;
 
-function hourUpdate(){
-    var currentTime = today.getHours();
+    //convert time in 24 hour format
+    if (ampm  === "AM" && hour === 12) {
+        
+        hour24 = 0;
+    
+    } else if (ampm === "AM") {
+       
+        hour24 = hour;
+    
+    } else if (ampm == "PM" && hour === 12 ) {
+        
+        hour24 = hour;
+    
+    } else if (ampm === "PM" && hour >= 1) {
+        
+        hour24 = hour + 12;
+    }
 
-    $(".timeslot").each(function() {
-        var blockTime = parseInt($(this).attr("id").split("-")[1]);
-        if (blockTime < currentTime) {
-            $(this).addClass("past")
-        } else
-        if (blockTime === currentTime) {
-            $(this).removeClass("past").addClass("present")
-        }
-        else {$(this).removeClass("past", "present").addClass("future");
-        }
-    });
+    // Set background    
+    if(hour24 < currentHour){
+        
+        textBlock.classLists("past");
+        // textBlock.attr("readOnly", true);
+
+    }
+    else if(hour24 > currentHour){
+        
+        textBlock.classLists("future");
+    }
+    else if(hour24 === currentHour){
+        
+        textBlock.classLists("present");
+    }
+
 }
-hourUpdate();
+
+function hourUpdate () {
+    let currentHour = moment ().hours();
+
+    for(let i = 0; i < $(".time-block").length; i++){
+        let hour = parseInt($(".time-block")[i].getAttribute("id").split("-")[1])
+        console.log(hour-1)
+        console.log(currentHour)
+        if(hour-1 < currentHour) {
+            $(".time-block") [i].classLists.add("past")
+        } else if(hour === currentHour) {
+            $(".time-block")[i].classLists.add("past")
+            $(".time-block")[i].classLists.remove("present")
+        } else {
+            $(".time-block")[i].classLists.remove("past")
+            $(".time-block")[i].classLists.remove("present")
+            $(".time-block")[i].classLists.add("future")
+        }
+    }
+}
+
 });
